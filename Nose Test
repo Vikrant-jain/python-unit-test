@@ -1,0 +1,103 @@
+import inspect
+import re
+import math
+
+class Circle:
+
+    def __init__(self, radius):
+        # Define the initialization method below
+        pattern = re.compile("^\\-?[0-9]")
+        if(pattern.match(str(radius))):
+            if(radius >= 0 and radius <= 1000):
+                self.radius = radius
+            else:
+                raise ValueError("radius must be between 0 and 1000 inclusive")
+        else:
+            raise TypeError("radius must be a number")
+        
+        
+    def area(self):
+        # Define the area functionality below
+        return round(((self.radius ** 2) * math.pi),2)
+
+    def circumference(self):
+        # Define the circumference functionality below
+        return round((self.radius * 2 * math.pi),2)
+
+
+
+#####################################################################3
+from proj.circle import Circle
+from nose.tools import assert_raises, eq_
+
+class TestingCircleCreation:
+    def test_creating_circle_with_numeric_radius(self):
+        c1=Circle(2.5)
+        assert c1.radius==2.5
+
+    def test_creating_circle_with_negative_radius(self):
+        c1=Circle(2.5)
+        assert c1.radius==2.5
+        with assert_raises(ValueError):
+            Circle(-2.5)
+
+
+    def test_creating_circle_with_greaterthan_radius(self):
+        c1=Circle(2.5)
+        assert c1.radius==2.5
+        with assert_raises(ValueError):
+            Circle(1000.1)
+
+    def test_creating_circle_with_nonnumeric_radius(self):
+        c1=Circle(2.5)
+        assert c1.radius==2.5
+        with assert_raises(TypeError):
+            Circle('hello')
+        
+        
+        
+        
+        
+        
+##########################################################################
+class TestCircleArea:
+    def test_circlearea_with_random_numeric_radius(self):
+        # Define a circle 'c1' with radius 2.5 and check if 
+        # it's area is 19.63
+        c1 = Circle(2.5)
+        eq_(c1.area(),19.63)
+        
+    def test_circlearea_with_min_radius(self):
+        # Define a circle 'c2' with radius 0 and check if 
+        # it's area is 0
+        c2 = Circle(0)
+        eq_(c2.area(),0)
+        
+    def test_circlearea_with_max_radius(self):
+        # Define a circle 'c3' with radius 1000.1 and check if 
+        # it's area is 3141592.65
+        c3 = Circle(1000)
+        eq_(c3.area(),3141592.65)
+        
+        
+        
+#############################################################################
+
+class TestCircleCircumference:
+    def test_circlecircum_with_random_numeric_radius(self):
+        # Define a circle 'c1' with radius 2.5 and check if 
+        # it's circumference is 15.71
+        c1= Circle(2.5)
+        eq_(c1.circumference(), 15.71)
+        
+    def test_circlecircum_with_min_radius(self):
+        # Define a circle 'c2' with radius 0 and check if 
+        # it's circumference is 0.
+        c2= Circle(0)
+        eq_(c2.circumference(), 0)
+        
+    def test_circlecircum_with_max_radius(self):
+        # Define a circle 'c3' with radius 1000 and check if 
+        # it's circumference is 6283.19.
+        c3= Circle(1000)
+        eq_(c3.circumference(), 6283.19)
